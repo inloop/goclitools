@@ -24,8 +24,9 @@ func ReflectionFill(o interface{}) error {
 				field.SetBool(Confirm(typeField.Name))
 				break
 			case reflect.String:
-				options := strings.Split(tag.Get("options"), ",")
-				if len(options) > 0 {
+				optionsString := tag.Get("options")
+				if optionsString != "" {
+					options := strings.Split(optionsString, ",")
 					index, err := PromptWithChoice(typeField.Name, options)
 					if err != nil {
 						return err
