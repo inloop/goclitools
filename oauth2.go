@@ -14,7 +14,7 @@ import (
 	"golang.org/x/oauth2"
 )
 
-// GetOauth2Token ...
+// OAuth2GetToken Create local http server and use it to get access token from oauth authorization provider
 func OAuth2GetToken(conf *oauth2.Config) (*oauth2.Token, error) {
 	conf.RedirectURL = "http://localhost:3000"
 	ctx := context.Background()
