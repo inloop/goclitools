@@ -18,7 +18,7 @@ import (
 func OAuth2GetToken(conf *oauth2.Config) (*oauth2.Token, error) {
 	conf.RedirectURL = "http://localhost:3000"
 	ctx := context.Background()
-	state := uuid.NewV4().String()
+	state := uuid.Must(uuid.NewV4()).String()
 	url := conf.AuthCodeURL(state, oauth2.AccessTypeOffline)
 
 	serverChannel := make(chan string)
