@@ -1,6 +1,7 @@
 package goclitools
 
 import (
+	"bytes"
 	"log"
 	"os"
 	"os/exec"
@@ -36,6 +37,17 @@ func RunInteractiveInDir(cmd, dir string) error {
 		return cli.NewExitError(err, 1)
 	}
 	return nil
+}
+
+// RunWithInput ...
+func RunWithInput(cmd string, input []byte) ([]byte, error) {
+	command := exec.Command("sh", "-c", cmd)
+	command.Stdin = bytes.NewReader(input)
+	data, err := command.Output()
+	if err != nil {
+		return data, cli.NewExitError(err.Error(), 1)
+	}
+	return data, nil
 }
 
 // RunInteractive ...
