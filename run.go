@@ -12,6 +12,9 @@ import (
 
 // RunInDir ...
 func RunInDir(cmd, dir string) ([]byte, error) {
+	if os.Getenv("DEBUG") != "" {
+		log.Println(cmd)
+	}
 	command := exec.Command("sh", "-c", "set -o pipefail && "+strings.Replace(cmd, "'", "\\'", -1))
 	command.Dir = dir
 	return command.Output()
