@@ -56,3 +56,18 @@ func RunWithInput(cmd string, input []byte) ([]byte, error) {
 func RunInteractive(cmd string) error {
 	return RunInteractiveInDir(cmd, "")
 }
+
+// RunCombinedInDir ...
+func RunCombinedInDir(cmd, dir string) ([]byte, error) {
+	if os.Getenv("DEBUG") != "" {
+		log.Println(cmd)
+	}
+	command := exec.Command("sh", "-c", "set -o pipefail && "+cmd)
+	command.Dir = dir
+	return command.CombinedOutput()
+}
+
+// RunCombined ...
+func RunCombined(cmd string) ([]byte, error) {
+	return RunCombinedInDir(cmd, "")
+}
