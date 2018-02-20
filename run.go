@@ -16,7 +16,11 @@ func RunInDir(cmd, dir string) ([]byte, error) {
 	}
 	command := exec.Command("sh", "-c", "set -o pipefail && "+cmd)
 	command.Dir = dir
-	return command.CombinedOutput()
+	output, err := command.CombinedOutput()
+	if err != nil {
+		return nil, cli.NewExitError(err, 1)
+	}
+	return output, nil
 }
 
 // Run ...

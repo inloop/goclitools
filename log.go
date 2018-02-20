@@ -10,6 +10,11 @@ func Log(m ...interface{}) {
 	fmt.Println(m...)
 }
 
+// Logf ...
+func Logf(f string, m ...interface{}) {
+	fmt.Printf(f, m...)
+}
+
 // LogSection ...
 func LogSection(title string, m ...interface{}) {
 	header := fmt.Sprintf("==== %s ====", title)
