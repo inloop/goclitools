@@ -60,3 +60,41 @@ func RunWithInput(cmd string, input []byte) ([]byte, error) {
 func RunInteractive(cmd string) error {
 	return RunInteractiveInDir(cmd, "")
 }
+
+// RunSecureInDir ...
+func RunSecureInDir(cmd, dir string, secrets []string) ([]byte, error) {
+	if os.Getenv("DEBUG") != "" {
+		log.Println(SecureString(cmd, secrets))
+	}
+	command := exec.Command("sh", "-c", "set -o pipefail && "+cmd)
+	command.Dir = dir
+	out, err := command.CombinedOutput()
+	return SecureByteArray(out, secrets), err
+}
+
+// RunSecure ...
+func RunSecure(cmd string, secrets []string) ([]byte, error) {
+	return RunSecureInDir(cmd, "", secrets)
+}
+
+// RunSecureInteractiveInDir ...
+func RunSecureInteractiveInDir(cmd, dir string, secrets []string) error {
+	if os.Getenv("DEBUG") != "" {
+		log.Println(SecureString(cmd, secrets))
+	}
+	command := exec.Command("sh", "-c", "set -o pipefail && "+cmd)
+	command.Stdout = SecureStd(os.Stdout, secrets)
+	command.Stdin = os.Stdin
+	command.Stderr = SecureStd(os.Stderr, secrets)
+	command.Dir = dir
+	err := command.Run()
+	if err != nil {
+		return cli.NewExitError(err, 1)
+	}
+	return nil
+}
+
+// RunSecureInteractive ...
+func RunSecureInteractive(cmd string, secrets []string) error {
+	return RunSecureInteractiveInDir(cmd, "", secrets)
+}
