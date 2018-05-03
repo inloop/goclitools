@@ -18,14 +18,14 @@ func RunInDir(cmd, dir string) ([]byte, error) {
 	command.Dir = dir
 	output, err := command.CombinedOutput()
 	if err != nil {
-		return nil, cli.NewExitError(err, 1)
+		return output, cli.NewExitError(err, 1)
 	}
 	return output, nil
 }
 
 // Run ...
 func Run(cmd string) ([]byte, error) {
-	return RunInDir(cmd, "")
+	return RunInDir(cmd, ".")
 }
 
 // RunInteractiveInDir ...
