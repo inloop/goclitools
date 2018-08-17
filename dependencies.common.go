@@ -46,6 +46,7 @@ func DependencyFastlane() Dependency {
 		Name:               "fastlane",
 		CheckCmd:           "fastlane -version",
 		CheckCmdValidation: "(?m)fastlane (\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$",
+		Dependencies:       []Dependency{DependencyHomebrew()},
 		InstallScripts: []DependencyScript{
 			DependencyScriptString{Fn: "brew cask install fastlane"},
 			DependencyScriptString{Fn: "export PATH=\"$HOME/.fastlane/bin:$PATH\""},
@@ -62,5 +63,10 @@ func DependencyFastlaneMatch() Dependency {
 		Name:               "fastlane match",
 		CheckCmd:           "fastlane match -version",
 		CheckCmdValidation: "(?m)match (\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$",
+		Dependencies:       []Dependency{DependencyFastlane()},
+		InstallScripts:     []DependencyScript{},
+		UninstallScripts: []DependencyScript{
+			DependencyScriptString{Fn: "echo \"you can only uninstall whole fastlane\""},
+		},
 	}
 }
