@@ -46,6 +46,13 @@ func DependencyFastlane() Dependency {
 		Name:               "fastlane",
 		CheckCmd:           "fastlane -version",
 		CheckCmdValidation: "(?m)fastlane (\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$",
+		InstallScripts: []DependencyScript{
+			DependencyScriptString{Fn: "brew cask install fastlane"},
+			DependencyScriptString{Fn: "echo \"export PATH=\\\"$HOME/.fastlane/bin:$PATH\\\"\" >> ~/.bash_profile"},
+		},
+		UninstallScripts: []DependencyScript{
+			DependencyScriptString{Fn: "brew cask uninstall fastlane"},
+		},
 	}
 }
 
