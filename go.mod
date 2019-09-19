@@ -1,4 +1,4 @@
-module github.com/inloop/goclitools.git
+module github.com/inloop/goclitools
 
 go 1.12
 
