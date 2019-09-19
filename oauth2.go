@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	uuid "github.com/satori/go.uuid"
+	uuid "github.com/gofrs/uuid"
 	"github.com/skratchdot/open-golang/open"
 
 	"golang.org/x/oauth2"
